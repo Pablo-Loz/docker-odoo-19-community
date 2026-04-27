@@ -1,0 +1,84 @@
+[options]
+; =============================================
+; Odoo 19 Community - Configuración PRODUCCIÓN
+; =============================================
+; Copia este archivo a odoo.conf y ajusta los valores
+; marcados con CAMBIAR antes de desplegar.
+
+; =============================================
+; Conexión a la base de datos
+; =============================================
+db_host = db
+db_port = 5432
+db_user = odoo
+db_password = False  ; Se inyecta via variable de entorno en docker-compose
+db_maxconn = 64      ; Conexiones máximas a la BD por worker
+db_template = template0
+; db_name = False    ; Forzar una sola BD (recomendado en producción)
+db_sslmode = prefer  ; prefer | require | verify-full
+
+; =============================================
+; Seguridad
+; =============================================
+admin_passwd = False         ; CAMBIAR - Contraseña maestra para gestión de BDs
+list_db = False              ; Ocultar selector de BD en login
+dbfilter = ^%d$              ; Solo mostrar BD que coincida con el hostname
+proxy_mode = True            ; Obligatorio detrás de Traefik/Nginx
+server_wide_modules = base,web
+
+; =============================================
+; Rutas de addons
+; =============================================
+addons_path = /mnt/extra-addons,/opt/odoo/muk-modules,/opt/odoo/oca/web,/opt/odoo/oca/server-tools,/opt/odoo/oca/server-ux,/opt/odoo/oca/reporting-engine,/opt/odoo/oca/partner-contact,/opt/odoo/oca/account-financial-tools,/opt/odoo/oca/queue,/opt/odoo/oca/social,/opt/odoo/oca/stock-logistics-workflow,/opt/odoo/oca/bank-payment,/opt/odoo/oca/server-brand,/usr/lib/python3/dist-packages/odoo/addons
+
+; =============================================
+; Servidor HTTP
+; =============================================
+http_port = 8069
+longpolling_port = 8072
+xmlrpc_interface = 0.0.0.0
+netrpc = False
+
+; =============================================
+; Workers y límites de recursos
+; =============================================
+; Regla general: workers = (CPU cores * 2) + 1
+workers = 4
+max_cron_threads = 2
+
+; Límites de memoria por worker
+limit_memory_hard = 2684354560   ; 2.5 GB - mata el worker si excede
+limit_memory_soft = 2147483648   ; 2.0 GB - recicla el worker tras la petición
+
+; Límites de tiempo por petición
+limit_time_cpu = 600             ; 10 min de CPU
+limit_time_real = 1200           ; 20 min tiempo real
+
+; Límite de peticiones antes de reciclar un worker
+limit_request = 8192
+
+; =============================================
+; SMTP - Correo saliente
+; =============================================
+; smtp_server = smtp.tudominio.com
+; smtp_port = 587
+; smtp_ssl = True
+; smtp_user = noreply@tudominio.com
+; smtp_password = CAMBIAR
+; email_from = noreply@tudominio.com
+
+; =============================================
+; Logging
+; =============================================
+log_level = warn
+log_handler = :WARNING,odoo:INFO,odoo.addons:WARNING
+; logfile = /var/log/odoo/odoo.log
+; log_db = False
+; syslog = False
+
+; =============================================
+; Datos / Filestore
+; =============================================
+data_dir = /var/lib/odoo
+csv_internal_sep = ,
+unaccent = True              ; Búsquedas sin acentos (requiere extensión unaccent en PostgreSQL)
