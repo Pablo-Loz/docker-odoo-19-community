@@ -1,0 +1,66 @@
+# =============================================
+# Datos de la base de datos PostgreSQL
+# =============================================
+postgres-data/
+
+# =============================================
+# Filestore de Odoo (adjuntos, sesiones, etc.)
+# =============================================
+odoo-data/
+
+# =============================================
+# Variables de entorno (contiene contraseñas)
+# =============================================
+.env
+
+# =============================================
+# Archivos de configuración con secretos
+# =============================================
+# odoo.conf se versiona, pero usará variables de entorno
+# Si generas un odoo.conf local con contraseñas en texto plano, añádelo aquí
+
+# =============================================
+# Python
+# =============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# =============================================
+# IDE / Editor
+# =============================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# =============================================
+# Sistema operativo
+# =============================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =============================================
+# Logs
+# =============================================
+*.log
+logs/
+
+# =============================================
+# Backups de base de datos
+# =============================================
+*.dump
+*.sql
+*.sql.gz
+*.bak
+backups/
