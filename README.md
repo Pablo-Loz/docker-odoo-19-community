@@ -33,6 +33,24 @@ El repo [muk-it/odoo-modules](https://github.com/muk-it/odoo-modules) se clona a
 - **`muk_web_dialog`** - Mejoras en diálogos
 - Y muchos más módulos útiles
 
+## 🎨 OCA Modules
+
+El repo [OCA](https://github.com/OCA) se clona automáticamente dentro de la imagen. Incluye:
+
+- **`server-tools`** - Herramientas del servidor
+- **`web`** - Módulos web
+- **`server-ux`** - Experiencia de usuario del servidor
+- **`reporting-engine`** - Motor de reportes
+- **`partner-contact`** - Módulos de contacto y socios
+- **`account-financial-tools`** - Herramientas financieras
+- **`queue`** - Módulos de cola
+- **`social`** - Módulos sociales
+- **`stock-logistics-workflow`** - Flujos de trabajo de inventario
+- **`bank-payment`** - Módulos de pago bancario
+- **`server-brand`** - Módulos de marca
+- Y muchos más módulos útiles
+
+
 **Para activar el tema:**
 1. Entra en Odoo → Ajustes → Modo Desarrollador (activar)
 2. Ve a Apps → Actualizar lista de aplicaciones
@@ -40,50 +58,19 @@ El repo [muk-it/odoo-modules](https://github.com/muk-it/odoo-modules) se clona a
 
 ## 🔧 click-odoo-contrib (Herramientas de mantenimiento)
 
-Las herramientas de click-odoo están instaladas dentro del contenedor. Úsalas así:
-
-```bash
-# Actualizar módulos de una BD
-docker exec -u 0 spl_gestion_odoo click-odoo-update -c /etc/odoo/odoo.conf -d <nombre_bd>
-
-# Inicializar una BD nueva con módulos
-docker exec -u 0 spl_gestion_odoo click-odoo-initdb -c /etc/odoo/odoo.conf -n <nombre_bd>
-
-# Ejecutar un script Python en contexto Odoo
-docker exec -u 0 spl_gestion_odoo click-odoo -c /etc/odoo/odoo.conf -d <nombre_bd> < script.py
-
+Las herramientas de click-odoo están instaladas dentro del contenedor.
 # Shell interactivo de Odoo
-docker exec -it -u 0 spl_gestion_odoo click-odoo -c /etc/odoo/odoo.conf -d <nombre_bd>
+```bash
+
+docker exec -it -u odoo  nombre_contenedor bash 
 ```
 
-## 📂 Añadir addons personalizados
-
-1. Coloca tus módulos dentro de la carpeta `custom-addons/`
-2. Reinicia el contenedor: `docker compose restart odoo`
-3. En Odoo → Apps → Actualizar lista de aplicaciones
-4. Busca e instala tu módulo
-
-## 📁 Datos persistentes
-
-| Ruta local         | Descripción                              |
-|--------------------|------------------------------------------|
-| `./postgres-data/` | Datos de PostgreSQL (ficheros de la BD)  |
-| `./odoo-data/`     | Filestore de Odoo (adjuntos, sesiones)   |
-| `./custom-addons/` | Tus módulos personalizados               |
-
-## ⚙️ Configuración
-
-Edita `odoo.conf` para cambiar:
-- Contraseñas (`db_password`, `admin_passwd`)
-- Workers para producción
-- Niveles de log
-- Etc.
-
-> **⚠️ IMPORTANTE**: Cambia las contraseñas por defecto antes de usar en producción.
+```docker
+click-odoo-update -c /etc/odoo/odoo.conf -d <nombre_bd>
+```
 
 ## 🛑 Parar los contenedores
 
 ```bash
-docker compose down          # Parar (mantiene datos)
-docker compose down -v       # Parar y BORRAR volúmenes (¡pierdes datos!)
+docker compose down -v       # Parar y BORRAR volúmenes
 ```
