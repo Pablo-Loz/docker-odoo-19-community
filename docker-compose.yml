@@ -6,7 +6,7 @@ services:
   # =========================================
   db:
     image: postgres:16
-    container_name: spl_gestion_db
+    container_name: docker_postgres_19_community
     restart: unless-stopped
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -19,7 +19,7 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U odoo"]
+      test: [ "CMD-SHELL", "pg_isready -U odoo" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -31,14 +31,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: spl_gestion_odoo
+    container_name: docker_odoo_19_community
     restart: unless-stopped
     depends_on:
       db:
         condition: service_healthy
     ports:
       - "8069:8069"
-      - "8072:8072"   # Longpolling (websocket/live chat)
+      - "8072:8072" # Longpolling (websocket/live chat)
     volumes:
       # Filestore de Odoo (adjuntos, sesiones, etc.)
       - ./odoo-data:/var/lib/odoo
