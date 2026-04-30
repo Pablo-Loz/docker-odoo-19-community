@@ -1,4 +1,4 @@
-# SPL Gestión - Odoo 19 Community (Docker)
+# Odoo 19 Community (Docker)
 
 ## 📦 Contenido
 
